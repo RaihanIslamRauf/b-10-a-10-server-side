@@ -81,6 +81,22 @@ async function run() {
       res.send(result);
     });
 
+    // Get campaigns for a specific user
+    app.get("/user-campaigns/:email", async (req, res) => {
+      const {email} = req.params;
+      const query = { userEmail : email };
+      const result = await campaignCollection.find(query).toArray();
+      res.send(result);
+    });
+    
+    app.delete('/user-campaigns/:id', async (req, res) => {
+      console.log('going to delete', req.params.id);
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await campaignCollection.deleteOne(query);
+      res.send(result);
+  })
+
     // Create a new user
     app.post("/users", async (req, res) => {
       const newUser = req.body;
@@ -89,9 +105,23 @@ async function run() {
       res.send(result);
     });
 
+    app.patch("/users", async (req, res) => {
+      const email = req.body.email;
+      const filter = { email };
+      const updatedDoc = {
+        $set: {
+          lastSignInTime: req.body?.lastSignInTime,
+        },
+      };
+      const result = await userCollection.updateOne(filter, updatedDoc);
+      res.send(result);
+    });
+
     // Confirm successful MongoDB connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
   } catch (error) {
     console.error("Error running the server:", error);
   }
