@@ -56,6 +56,19 @@ async function run() {
       res.send(result);
     });
 
+    app.put('/campaign/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedDoc = {
+          $set: req.body
+      }
+
+      const result = await campaignCollection.updateOne(filter, updatedDoc, options )
+
+      res.send(result);
+  })
+
     app.get("/runningCampaigns", async (req, res) => {
       const currentDate = new Date();
       try {
