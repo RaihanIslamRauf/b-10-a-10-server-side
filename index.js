@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -12,7 +13,7 @@ app.use(express.json());
 // MongoDB URI
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.3yfc6.mongodb.net/?retryWrites=true&w=majority`;
 
-// Create MongoClient with Stable API version
+// Create MongoClient
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -23,11 +24,9 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server
-    // await client.connect();
-
     const campaignCollection = client.db("campaignDB").collection("campaigns");
     const userCollection = client.db("campaignDB").collection("users");
+    const donationsCollection = client.db("campaignDB").collection("donations");
 
     /**
      * Campaigns APIs
@@ -56,19 +55,19 @@ async function run() {
       res.send(result);
     });
 
-    app.put('/campaign/:id', async (req, res) => {
+    // Update a campaign
+    app.put("/campaign/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const options = { upsert: true };
       const updatedDoc = {
-          $set: req.body
-      }
-
-      const result = await campaignCollection.updateOne(filter, updatedDoc, options )
-
+        $set: req.body,
+      };
+      const result = await campaignCollection.updateOne(filter, updatedDoc, options);
       res.send(result);
-  })
+    });
 
+    // Get running campaigns (deadline not passed)
     app.get("/runningCampaigns", async (req, res) => {
       const currentDate = new Date();
       try {
@@ -96,19 +95,20 @@ async function run() {
 
     // Get campaigns for a specific user
     app.get("/user-campaigns/:email", async (req, res) => {
-      const {email} = req.params;
-      const query = { userEmail : email };
+      const { email } = req.params;
+      const query = { userEmail: email };
       const result = await campaignCollection.find(query).toArray();
       res.send(result);
     });
-    
-    app.delete('/user-campaigns/:id', async (req, res) => {
-      console.log('going to delete', req.params.id);
+
+    // Delete a campaign by user
+    app.delete("/user-campaigns/:id", async (req, res) => {
+      console.log("going to delete", req.params.id);
       const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
+      const query = { _id: new ObjectId(id) };
       const result = await campaignCollection.deleteOne(query);
       res.send(result);
-  })
+    });
 
     // Create a new user
     app.post("/users", async (req, res) => {
@@ -118,6 +118,7 @@ async function run() {
       res.send(result);
     });
 
+    // Update user info
     app.patch("/users", async (req, res) => {
       const email = req.body.email;
       const filter = { email };
@@ -130,11 +131,26 @@ async function run() {
       res.send(result);
     });
 
-    // Confirm successful MongoDB connection
-    // await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+    /**
+     * Donations APIs
+     */
+
+    // Get all donations by user email
+    app.get("/donations", async (req, res) => {
+      const email = req.query.email;
+      const result = await donationsCollection.find({ userEmail: email }).toArray();
+      res.send(result);
+    });
+
+    // Post a new donation
+    app.post("/donations", async (req, res) => {
+      const donation = req.body;
+      console.log("New donation:", donation);
+      const result = await donationsCollection.insertOne(donation);
+      res.send(result);
+    });
+
+    console.log("Connected to MongoDB and APIs are ready.");
   } catch (error) {
     console.error("Error running the server:", error);
   }
@@ -147,7 +163,7 @@ app.get("/", (req, res) => {
   res.send("Crowd Funding server is running");
 });
 
-// Start server
+// Start the server
 app.listen(port, () => {
   console.log(`Crowd Funding server is running on port: ${port}`);
 });
