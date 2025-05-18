@@ -3,127 +3,106 @@
 
 ## 📘 Project Overview
 
-**CrowdCube** is a dynamic web application designed to connect individuals and organizations with causes they care about. Whether it's fundraising for a specific cause, managing donations, or exploring various campaigns, CrowdCube provides a seamless experience for users to contribute and make an impact.
+**CrowdCube** is a dynamic web application designed to connect individuals and organizations with causes they care about. Whether fundraising for a specific cause, managing donations, or exploring various campaigns, CrowdCube provides a seamless experience for users to contribute and make an impact.
 
 ---
 
-## ✅ Features List
+## ✅ Features
 
-- **Explore Campaigns**  
-  Browse a variety of donation campaigns with key details such as title, category, and funding goals.
+### Explore & Discover
+- Browse donation campaigns with key details: title, category, and donation amount.
+- Search campaigns by title.
+- Sort campaigns by title, donation amount, or deadline.
 
-- **Search & Sort**  
-  Search campaigns by title and sort them based on different criteria like date, popularity, and amount raised.
+### Donation & Campaign Management
+- Donate directly to any campaign through a smooth, intuitive process.
+- Organizers can create, update, and delete campaigns.
+- Track campaign progress easily.
 
-- **Category-Based Browsing**  
-  Filter campaigns by specific categories to find what matters most to you.
+### User Dashboard
+- Add and manage campaigns.
+- View, update, and delete created campaigns.
+- See your donation history.
+- Overview cards displaying total users and campaigns.
+- Highlighted featured campaign cards.
 
-- **Donate to Campaigns**  
-  Users can directly contribute to any campaign with a smooth and intuitive donation process.
-
-- **Campaign Management (CRUD)**  
-  Organizers can create, update, and delete campaigns while tracking their progress.
-
-- **User Dashboard**  
-  Manage your donation activity with features such as:
-  - Add new campaigns
-  - View, update, and delete your created campaigns
-  - See donation history
-  - Overview cards showing total users and campaigns
-  - Highlighted featured campaign cards
-
-- **Secure Authentication**  
-  Powered by Firebase Authentication for secure user registration and login.
-
-- **Interactive Feedback**  
-  Enjoy a smooth UX with toast notifications and confirmation modals for all actions.
-
-- **Responsive Design**  
-  Mobile-first and tablet-optimized layout ensures accessibility on all devices.
+### Security & UX
+- Secure user registration and login via Firebase Authentication.
+- Interactive toast notifications and confirmation modals.
+- Responsive design optimized for mobile and tablets.
 
 ---
 
 ## 🧱 Tech Stack
 
 ### Frontend:
-- **React.js** – Modular UI development
-- **Tailwind CSS + DaisyUI** – Rapid utility-first styling with custom components
-- **React Router DOM** – SPA navigation
-- **Framer Motion** – Modern animations and transitions
-- **Lottie React** – Lightweight animations
-- **React SweetAlert2** – Feedback notifications and modals
-- **React Icons** – Easy-to-use icon set
+- **React.js** – Component-based UI building  
+- **Tailwind CSS + DaisyUI** – Utility-first styling with prebuilt components  
+- **React Router DOM** – Seamless single-page navigation  
+- **Framer Motion & Lottie React** – Smooth animations and engaging visual effects  
+- **React SweetAlert2 & React Icons** – User feedback modals and iconography  
 
 ### Backend:
-- **Node.js & Express.js** – API routes for campaign management
-- **MongoDB (Atlas)** – Cloud NoSQL database
+- **Node.js & Express.js** – RESTful API development  
+- **MongoDB (Atlas)** – Cloud-hosted NoSQL database  
 
 ### Authentication & Hosting:
-- **Firebase Auth** – Secure user authentication
-- **Firebase Hosting** – Frontend deployment
-- **Vercel** – Backend deployment
+- **Firebase Authentication** – Secure login and user management  
+- **Firebase Hosting** – Frontend deployment  
+- **Vercel** – Backend server deployment
 
 ---
 
 ## ⚙️ Setup Instructions
 
 ### 1. Clone the Repository
-
 ```bash
 git clone https://github.com/RaihanIslamRauf/b-10-a-10-server-side
 cd b-10-a-10-server-side
 ```
 
 ### 2. Install Dependencies
-
 ```bash
 npm install
 ```
 
-### 3. Import .env file
+### 3. Configure Environment Variables
+Create a `.env` file in the root directory and add the required environment variables such as Firebase keys and backend URLs.
 
-Make sure you create a `.env` file and include all necessary environment variables (like Firebase keys and backend URLs).
+### 4. Run the Application
 
-### 4. Start the Application
-
-#### Frontend:
+#### Frontend
 ```bash
 npm run dev
 ```
 
-#### Backend:
+#### Backend
 ```bash
 nodemon index.js
 ```
 
 ---
 
-## 🌐 Live Link
+## 🌐 Live Demo
 
+Check out the live application here:  
 🔗 [CrowdCube Live Site](https://assignment-10-ebf30.web.app/)
 
 ---
 
 ## 🔐 Default Credentials
 
-No default credentials are required.  
-You can register with your own email and password through the app.
+No default credentials required — register using your own email and password directly on the site.
 
 ---
 
 ## 🚀 Future Enhancements
 
-- **Analytics Dashboard**  
-  Allow organizers to view data visualizations of campaign performance and donations.
+- **Analytics Dashboard:** Visualize campaign performance and donations.  
+- **Leaderboard System:** Highlight top campaigns and donors.  
+- **Social Media Sharing:** Boost visibility by sharing campaigns on social platforms.  
+- **Multi-role Access:** Admin and organizer roles for better content management.  
+- **Push Notifications:** Real-time updates on donations, milestones, and more.  
 
-- **Leaderboard System**  
-  Display top campaigns or donors based on engagement and contributions.
+---
 
-- **Social Media Sharing**  
-  Make campaigns easily shareable across social media to boost visibility.
-
-- **Multi-role Access**  
-  Introduce admin and organizer roles for content moderation and management.
-
-- **Push Notifications**  
-  Notify users about updates, donation confirmations, or campaign milestones.
